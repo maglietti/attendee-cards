@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Attendees</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Add Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Event Attendees</h1>
+        <div id="attendees-grid" class="attendees-grid">
+            <!-- Attendees will be dynamically populated here -->
+        </div>
+    </div>
+
+    <div id="attendee-form-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Attendee</h2>
+            <form id="attendee-form">
+                <input type="text" name="fullName" placeholder="Full Name" required>
+                <input type="text" name="company" placeholder="Company">
+                <input type="url" name="linkedin" placeholder="LinkedIn Profile URL">
+                <input type="text" name="socialLinks" placeholder="Social Media Links (comma-separated)">
+                <input type="number" name="yearGraduated" placeholder="Year Graduated">
+                <textarea name="description" placeholder="Brief Description"></textarea>
+                <input type="file" name="photo" accept="image/*">
+                <button type="submit">Add Attendee</button>
+            </form>
+        </div>
+    </div>
+
+    <button id="add-attendee-btn">+ Add Attendee</button>
+
+    <script src="script.js"></script>
+</body>
+</html>

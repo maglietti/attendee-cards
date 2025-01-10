@@ -1,0 +1,558 @@
+{
+    "attendees": [
+        {
+            "fullName": "Jane Doe",
+            "company": "Tech Innovations Inc.",
+            "linkedin": "https://www.linkedin.com/in/janedoe",
+            "socialLinks": [
+                "https://twitter.com/janedoe",
+                "https://github.com/janedoe",
+                "https://medium.com/@janedoe"
+            ],
+            "yearGraduated": 2018,
+            "description": "Software engineer passionate about AI and machine learning. Experienced in building scalable web applications and developing intelligent systems that solve complex real-world problems.",
+            "photo": "https://randomuser.me/api/portraits/women/44.jpg"
+        },
+        {
+            "fullName": "John Smith",
+            "company": "Global Solutions LLC",
+            "linkedin": "https://www.linkedin.com/in/johnsmith",
+            "socialLinks": [
+                "https://twitter.com/johnsmith",
+                "https://instagram.com/johnsmith",
+                "https://facebook.com/johnsmith"
+            ],
+            "yearGraduated": 2016,
+            "description": "Product manager with a focus on user experience and agile methodologies. Loves solving complex business problems and creating innovative solutions that drive organizational success.",
+            "photo": "https://randomuser.me/api/portraits/men/32.jpg"
+        },
+        {
+            "fullName": "Emily Rodriguez",
+            "company": "Green Energy Solutions",
+            "linkedin": "https://www.linkedin.com/in/emilyrodriguez",
+            "socialLinks": [
+                "https://twitter.com/emilytech",
+                "https://github.com/emilyrod"
+            ],
+            "yearGraduated": 2019,
+            "description": "Sustainability consultant specializing in renewable energy technologies and environmental impact assessment. Dedicated to developing innovative strategies for reducing carbon footprint and promoting sustainable development.",
+            "photo": "https://randomuser.me/api/portraits/women/65.jpg"
+        },
+        {
+            "fullName": "Michael Chang",
+            "company": "FinTech Innovations",
+            "linkedin": "https://www.linkedin.com/in/michaelchang",
+            "socialLinks": [
+                "https://twitter.com/mikefintech",
+                "https://medium.com/@michaelchang"
+            ],
+            "yearGraduated": 2017,
+            "description": "Blockchain developer and cryptocurrency researcher. Passionate about decentralized finance and emerging technologies. Exploring the potential of blockchain to revolutionize financial systems and create more transparent, secure transactions.",
+            "photo": "https://randomuser.me/api/portraits/men/79.jpg"
+        },
+        {
+            "fullName": "Sophia Lee",
+            "company": "Healthcare Dynamics",
+            "linkedin": "https://www.linkedin.com/in/sophialee",
+            "socialLinks": [
+                "https://twitter.com/sophiahealth",
+                "https://instagram.com/sophia_md"
+            ],
+            "yearGraduated": 2020,
+            "description": "Digital health innovator focusing on telemedicine and patient-centric healthcare solutions. Committed to leveraging technology to improve patient outcomes and make healthcare more accessible and efficient.",
+            "photo": "https://randomuser.me/api/portraits/women/50.jpg"
+        },
+        {
+            "fullName": "David Kim",
+            "company": "Cloud Native Systems",
+            "linkedin": "https://www.linkedin.com/in/davidkim",
+            "socialLinks": [
+                "https://github.com/davidcloud",
+                "https://medium.com/@davidtechblog"
+            ],
+            "yearGraduated": 2015,
+            "description": "Senior cloud architect with expertise in Kubernetes, microservices, and scalable infrastructure design. Passionate about building highly available and secure cloud systems that drive business success.",
+            "photo": "https://randomuser.me/api/portraits/men/61.jpg"
+        },
+        {
+            "fullName": "Olivia Martinez",
+            "company": "Creative Media Studios",
+            "linkedin": "https://www.linkedin.com/in/oliviamartinez",
+            "socialLinks": [
+                "https://instagram.com/olivia_creative",
+                "https://twitter.com/oliviadesigns"
+            ],
+            "yearGraduated": 2021,
+            "description": "UX/UI designer with a passion for creating intuitive and visually stunning digital experiences. Dedicated to crafting user-centered designs that drive engagement and conversion.",
+            "photo": "https://randomuser.me/api/portraits/women/33.jpg"
+        },
+        {
+            "fullName": "Alex Wong",
+            "company": "Quantum Research Labs",
+            "linkedin": "https://www.linkedin.com/in/alexwong",
+            "socialLinks": [
+                "https://twitter.com/alexquantum",
+                "https://github.com/alexresearch"
+            ],
+            "yearGraduated": 2016,
+            "description": "Quantum computing researcher exploring advanced algorithms and computational physics. Committed to advancing the field of quantum computing and its applications in various industries.",
+            "photo": "https://randomuser.me/api/portraits/men/88.jpg"
+        },
+        {
+            "fullName": "Emma Thompson",
+            "company": "Global Education Initiatives",
+            "linkedin": "https://www.linkedin.com/in/emmathompson",
+            "socialLinks": [
+                "https://twitter.com/emma_edtech",
+                "https://medium.com/@emmaeducation"
+            ],
+            "yearGraduated": 2019,
+            "description": "EdTech entrepreneur developing innovative learning platforms and educational technology solutions. Passionate about improving education outcomes and increasing access to quality education worldwide.",
+            "photo": "https://randomuser.me/api/portraits/women/72.jpg"
+        },
+        {
+            "fullName": "Ethan Hall",
+            "company": "Cybersecurity Solutions",
+            "linkedin": "https://www.linkedin.com/in/ethanhall",
+            "socialLinks": [
+                "https://twitter.com/ethanhallsec",
+                "https://github.com/ethanhallsec"
+            ],
+            "yearGraduated": 2018,
+            "description": "Cybersecurity expert with expertise in penetration testing, vulnerability assessment, and incident response. Committed to protecting individuals and organizations from cyber threats.",
+            "photo": "https://randomuser.me/api/portraits/men/42.jpg"
+        },
+        {
+            "fullName": "Ava Chen",
+            "company": "Artificial Intelligence Lab",
+            "linkedin": "https://www.linkedin.com/in/avachen",
+            "socialLinks": [
+                "https://twitter.com/avachenai",
+                "https://github.com/avachenai"
+            ],
+            "yearGraduated": 2020,
+            "description": "AI researcher focusing on natural language processing, computer vision, and machine learning. Passionate about developing AI solutions that drive business value and improve people's lives.",
+            "photo": "https://randomuser.me/api/portraits/women/91.jpg"
+        },
+        {
+            "fullName": "Liam Patel",
+            "company": "Data Science Institute",
+            "linkedin": "https://www.linkedin.com/in/liampatel",
+            "socialLinks": [
+                "https://twitter.com/liampateldata",
+                "https://github.com/liampateldata"
+            ],
+            "yearGraduated": 2019,
+            "description": "Data scientist with expertise in data visualization, statistical modeling, and data mining. Committed to extracting insights from data and driving business decisions with data-driven solutions.",
+            "photo": "https://randomuser.me/api/portraits/men/19.jpg"
+        },
+        {
+            "fullName": "Sophie Taylor",
+            "company": "Digital Marketing Agency",
+            "linkedin": "https://www.linkedin.com/in/sophietaylor",
+            "socialLinks": [
+                "https://twitter.com/sophietaylor",
+                "https://instagram.com/sophietaylor"
+            ],
+            "yearGraduated": 2021,
+            "description": "Digital marketing specialist with expertise in SEO, social media marketing, and content creation. Passionate about developing marketing strategies that drive engagement and conversion.",
+            "photo": "https://randomuser.me/api/portraits/women/28.jpg"
+        },
+        {
+            "fullName": "Noah Kim",
+            "company": "Robotics Engineering",
+            "linkedin": "https://www.linkedin.com/in/noahkim",
+            "socialLinks": [
+                "https://twitter.com/noahkimrobot",
+                "https://github.com/noahkimrobot"
+            ],
+            "yearGraduated": 2018,
+            "description": "Robotics engineer with expertise in robotics design, development, and deployment. Committed to advancing the field of robotics and its applications in various industries.",
+            "photo": "https://randomuser.me/api/portraits/men/67.jpg"
+        },
+        {
+            "fullName": "Mia Garcia",
+            "company": "Environmental Sustainability",
+            "linkedin": "https://www.linkedin.com/in/miagarcia",
+            "socialLinks": [
+                "https://twitter.com/miagarciaenv",
+                "https://instagram.com/miagarciaenv"
+            ],
+            "yearGraduated": 2020,
+            "description": "Environmental sustainability specialist with expertise in sustainable development, climate change, and environmental policy. Passionate about promoting sustainable practices and reducing environmental impact.",
+            "photo": "https://randomuser.me/api/portraits/women/85.jpg"
+        },
+        {
+            "fullName": "Julian Sanchez",
+            "company": "Financial Analysis",
+            "linkedin": "https://www.linkedin.com/in/juliansanchez",
+            "socialLinks": [
+                "https://twitter.com/juliansanchez",
+                "https://github.com/juliansanchez"
+            ],
+            "yearGraduated": 2019,
+            "description": "Financial analyst with expertise in financial modeling, data analysis, and investment research. Committed to providing data-driven insights that drive business decisions.",
+            "photo": "https://randomuser.me/api/portraits/men/51.jpg"
+        },
+        {
+            "fullName": "Gabriella Martin",
+            "company": "Human Resources",
+            "linkedin": "https://www.linkedin.com/in/gabriellamartin",
+            "socialLinks": [
+                "https://twitter.com/gabriellamartin",
+                "https://instagram.com/gabriellamartin"
+            ],
+            "yearGraduated": 2021,
+            "description": "HR specialist with expertise in talent acquisition, employee engagement, and benefits administration. Passionate about creating a positive and inclusive work environment.",
+            "photo": "https://randomuser.me/api/portraits/women/39.jpg"
+        },
+        {
+            "fullName": "Caleb Lee",
+            "company": "Network Security",
+            "linkedin": "https://www.linkedin.com/in/caleblee",
+            "socialLinks": [
+                "https://twitter.com/calebleesec",
+                "https://github.com/calebleesec"
+            ],
+            "yearGraduated": 2018,
+            "description": "Network security expert with expertise in network architecture, security protocols, and threat analysis. Committed to protecting networks from cyber threats and ensuring data security.",
+            "photo": "https://randomuser.me/api/portraits/men/75.jpg"
+        },
+        {
+            "fullName": "Ava Moreno",
+            "company": "Software Development",
+            "linkedin": "https://www.linkedin.com/in/avamoreno",
+            "socialLinks": [
+                "https://twitter.com/avamoreno",
+                "https://github.com/avamoreno"
+            ],
+            "yearGraduated": 2020,
+            "description": "Software developer with expertise in Java, Python, and agile development methodologies. Passionate about building scalable and efficient software solutions.",
+            "photo": "https://randomuser.me/api/portraits/women/96.jpg"
+        },
+        {
+            "fullName": "Elijah Brooks",
+            "company": "Data Engineering",
+            "linkedin": "https://www.linkedin.com/in/elijahbrooks",
+            "socialLinks": [
+                "https://twitter.com/elijahbrooks",
+                "https://github.com/elijahbrooks"
+            ],
+            "yearGraduated": 2019,
+            "description": "Data engineer with expertise in data warehousing, ETL, and data visualization. Committed to building scalable and efficient data systems that drive business insights.",
+            "photo": "https://randomuser.me/api/portraits/men/29.jpg"
+        },
+        {
+            "fullName": "Lily Tran",
+            "company": "Marketing Strategy",
+            "linkedin": "https://www.linkedin.com/in/lilytran",
+            "socialLinks": [
+                "https://twitter.com/lilytran",
+                "https://instagram.com/lilytran"
+            ],
+            "yearGraduated": 2021,
+            "description": "Marketing strategist with expertise in market research, competitive analysis, and brand development. Passionate about developing marketing strategies that drive business growth.",
+            "photo": "https://randomuser.me/api/portraits/women/46.jpg"
+        },
+        {
+            "fullName": "Logan White",
+            "company": "Cloud Computing",
+            "linkedin": "https://www.linkedin.com/in/loganwhite",
+            "socialLinks": [
+                "https://twitter.com/loganwhite",
+                "https://github.com/loganwhite"
+            ],
+            "yearGraduated": 2018,
+            "description": "Cloud computing expert with expertise in cloud architecture, migration, and security. Committed to helping businesses leverage the power of cloud computing.",
+            "photo": "https://randomuser.me/api/portraits/men/82.jpg"
+        },
+        {
+            "fullName": "Piper Hall",
+            "company": "User Experience",
+            "linkedin": "https://www.linkedin.com/in/piperhall",
+            "socialLinks": [
+                "https://twitter.com/piperhall",
+                "https://instagram.com/piperhall"
+            ],
+            "yearGraduated": 2020,
+            "description": "UX designer with expertise in user research, wireframing, and prototyping. Passionate about creating user-centered designs that drive engagement and conversion.",
+            "photo": "https://randomuser.me/api/portraits/women/58.jpg"
+        },
+        {
+            "fullName": "Remi Patel",
+            "company": "Business Intelligence",
+            "linkedin": "https://www.linkedin.com/in/remipatel",
+            "socialLinks": [
+                "https://twitter.com/remipatel",
+                "https://github.com/remipatel"
+            ],
+            "yearGraduated": 2019,
+            "description": "Business intelligence analyst with expertise in data analysis, reporting, and visualization. Committed to providing data-driven insights that drive business decisions.",
+            "photo": "https://randomuser.me/api/portraits/men/49.jpg"
+        },
+        {
+            "fullName": "Indigo Rose",
+            "company": "Digital Media",
+            "linkedin": "https://www.linkedin.com/in/indigorose",
+            "socialLinks": [
+                "https://twitter.com/indigorose",
+                "https://instagram.com/indigorose"
+            ],
+            "yearGraduated": 2021,
+            "description": "Digital media specialist with expertise in video production, photography, and social media marketing. Passionate about creating engaging digital content that drives brand awareness.",
+            "photo": "https://randomuser.me/api/portraits/women/71.jpg"
+        },
+        {
+            "fullName": "Cameron Lee",
+            "company": "Cybersecurity Consulting",
+            "linkedin": "https://www.linkedin.com/in/cameronlee",
+            "socialLinks": [
+                "https://twitter.com/cameronleesec",
+                "https://github.com/cameronleesec"
+            ],
+            "yearGraduated": 2018,
+            "description": "Cybersecurity consultant with expertise in penetration testing, vulnerability assessment, and incident response. Committed to protecting businesses from cyber threats.",
+            "photo": "https://randomuser.me/api/portraits/men/93.jpg"
+        },
+        {
+            "fullName": "Astrid Kim",
+            "company": "Artificial Intelligence",
+            "linkedin": "https://www.linkedin.com/in/astridkim",
+            "socialLinks": [
+                "https://twitter.com/astridkimai",
+                "https://github.com/astridkimai"
+            ],
+            "yearGraduated": 2020,
+            "description": "AI researcher specializing in machine learning algorithms and neural network architectures. Passionate about developing cutting-edge AI technologies that push the boundaries of computational intelligence.",
+            "photo": "https://randomuser.me/api/portraits/women/62.jpg"
+        },
+        {
+            "fullName": "Zara Thompson",
+            "company": "Digital Transformation",
+            "linkedin": "https://www.linkedin.com/in/zarathompson",
+            "socialLinks": [
+                "https://twitter.com/zarathompson",
+                "https://instagram.com/zarathompson"
+            ],
+            "yearGraduated": 2019,
+            "description": "Digital transformation consultant with expertise in organizational change management, technology integration, and strategic innovation. Committed to helping businesses adapt and thrive in the digital age.",
+            "photo": "https://randomuser.me/api/portraits/women/54.jpg"
+        },
+        {
+            "fullName": "Marcus Rodriguez",
+            "company": "Renewable Energy",
+            "linkedin": "https://www.linkedin.com/in/marcusrodriguez",
+            "socialLinks": [
+                "https://twitter.com/marcusrenew",
+                "https://github.com/marcusrodriguez"
+            ],
+            "yearGraduated": 2018,
+            "description": "Renewable energy engineer specializing in solar and wind power technologies. Dedicated to developing sustainable energy solutions that reduce carbon emissions and promote environmental conservation.",
+            "photo": "https://randomuser.me/api/portraits/men/36.jpg"
+        },
+        {
+            "fullName": "Elena Petrova",
+            "company": "Blockchain Innovation",
+            "linkedin": "https://www.linkedin.com/in/elenapetrova",
+            "socialLinks": [
+                "https://twitter.com/elenablockchain",
+                "https://medium.com/@elenapetrova"
+            ],
+            "yearGraduated": 2020,
+            "description": "Blockchain strategist with expertise in decentralized finance, smart contract development, and cryptocurrency economics. Passionate about exploring the transformative potential of blockchain technology.",
+            "photo": "https://randomuser.me/api/portraits/women/77.jpg"
+        },
+        {
+            "fullName": "Ryan Chen",
+            "company": "Quantum Computing",
+            "linkedin": "https://www.linkedin.com/in/ryanchen",
+            "socialLinks": [
+                "https://twitter.com/ryanchenquantum",
+                "https://github.com/ryanchen"
+            ],
+            "yearGraduated": 2017,
+            "description": "Quantum computing researcher focusing on quantum algorithms, error correction, and quantum hardware development. Committed to advancing the field of quantum computing and its practical applications.",
+            "photo": "https://randomuser.me/api/portraits/men/55.jpg"
+        },
+        {
+            "fullName": "Aria Nakamura",
+            "company": "Space Technology",
+            "linkedin": "https://www.linkedin.com/in/arianakamura",
+            "socialLinks": [
+                "https://twitter.com/ariaspace",
+                "https://github.com/arianakamura"
+            ],
+            "yearGraduated": 2019,
+            "description": "Aerospace engineer specializing in satellite design, orbital mechanics, and space exploration technologies. Passionate about advancing human capabilities in space research and commercial space ventures.",
+            "photo": "https://randomuser.me/api/portraits/women/89.jpg"
+        },
+        {
+            "fullName": "Diego Martinez",
+            "company": "Augmented Reality",
+            "linkedin": "https://www.linkedin.com/in/diegomartinez",
+            "socialLinks": [
+                "https://twitter.com/diegoar",
+                "https://medium.com/@diegomartinez"
+            ],
+            "yearGraduated": 2018,
+            "description": "Augmented reality developer with expertise in AR/VR application design, 3D modeling, and immersive user experiences. Committed to pushing the boundaries of interactive digital technologies.",
+            "photo": "https://randomuser.me/api/portraits/men/64.jpg"
+        },
+        {
+            "fullName": "Naomi Singh",
+            "company": "Biotech Innovations",
+            "linkedin": "https://www.linkedin.com/in/naomisingh",
+            "socialLinks": [
+                "https://twitter.com/naomibiotech",
+                "https://instagram.com/naomisingh"
+            ],
+            "yearGraduated": 2020,
+            "description": "Biotechnology researcher focusing on genetic engineering, personalized medicine, and innovative healthcare solutions. Dedicated to developing breakthrough medical technologies that improve human health.",
+            "photo": "https://randomuser.me/api/portraits/women/26.jpg"
+        },
+        {
+            "fullName": "Lucas Kim",
+            "company": "Autonomous Vehicles",
+            "linkedin": "https://www.linkedin.com/in/lucaskim",
+            "socialLinks": [
+                "https://twitter.com/lucasautonomous",
+                "https://github.com/lucaskim"
+            ],
+            "yearGraduated": 2017,
+            "description": "Autonomous vehicle engineer specializing in machine learning, sensor fusion, and self-driving technology. Passionate about revolutionizing transportation through intelligent mobility solutions.",
+            "photo": "https://randomuser.me/api/portraits/men/47.jpg"
+        },
+        {
+            "fullName": "Valentina Rodriguez",
+            "company": "Climate Tech",
+            "linkedin": "https://www.linkedin.com/in/valentinarodriguez",
+            "socialLinks": [
+                "https://twitter.com/valentinaclimate",
+                "https://medium.com/@valentinarodriguez"
+            ],
+            "yearGraduated": 2019,
+            "description": "Climate technology specialist focusing on carbon capture, sustainable infrastructure, and environmental innovation. Committed to developing technological solutions to address global climate challenges.",
+            "photo": "https://randomuser.me/api/portraits/women/60.jpg"
+        },
+        {
+            "fullName": "Omar Hassan",
+            "company": "Cybersecurity Research",
+            "linkedin": "https://www.linkedin.com/in/omarhassan",
+            "socialLinks": [
+                "https://twitter.com/omarinfosec",
+                "https://github.com/omarhassan"
+            ],
+            "yearGraduated": 2018,
+            "description": "Cybersecurity researcher specializing in threat intelligence, network security, and ethical hacking. Dedicated to developing innovative security solutions to protect digital infrastructure.",
+            "photo": "https://randomuser.me/api/portraits/men/83.jpg"
+        },
+        {
+            "fullName": "Emma Larsson",
+            "company": "Sustainable Design",
+            "linkedin": "https://www.linkedin.com/in/emmalarsson",
+            "socialLinks": [
+                "https://twitter.com/emmasustain",
+                "https://instagram.com/emmalarsson"
+            ],
+            "yearGraduated": 2020,
+            "description": "Sustainable design engineer focusing on circular economy, eco-friendly materials, and green product development. Passionate about creating innovative solutions that minimize environmental impact.",
+            "photo": "https://randomuser.me/api/portraits/women/74.jpg"
+        },
+        {
+            "fullName": "Kai Wong",
+            "company": "Fintech Solutions",
+            "linkedin": "https://www.linkedin.com/in/kaiwong",
+            "socialLinks": [
+                "https://twitter.com/kaifintec",
+                "https://github.com/kaiwong"
+            ],
+            "yearGraduated": 2017,
+            "description": "Fintech innovator specializing in digital payment systems, blockchain integration, and financial software development. Committed to transforming financial services through cutting-edge technology.",
+            "photo": "https://randomuser.me/api/portraits/men/57.jpg"
+        },
+        {
+            "fullName": "Isabella Santos",
+            "company": "Machine Learning",
+            "linkedin": "https://www.linkedin.com/in/isabellasantos",
+            "socialLinks": [
+                "https://twitter.com/isabelladata",
+                "https://medium.com/@isabellasantos"
+            ],
+            "yearGraduated": 2019,
+            "description": "Machine learning engineer with expertise in predictive analytics, natural language processing, and AI model optimization. Passionate about developing intelligent systems that solve complex real-world problems.",
+            "photo": "https://randomuser.me/api/portraits/women/41.jpg"
+        },
+        {
+            "fullName": "Ethan Patel",
+            "company": "Internet of Things",
+            "linkedin": "https://www.linkedin.com/in/ethanpatel",
+            "socialLinks": [
+                "https://twitter.com/ethaniot",
+                "https://github.com/ethanpatel"
+            ],
+            "yearGraduated": 2018,
+            "description": "IoT solutions architect specializing in smart home technologies, industrial IoT, and sensor network design. Dedicated to creating interconnected systems that improve efficiency and user experience.",
+            "photo": "https://randomuser.me/api/portraits/men/34.jpg"
+        },
+        {
+            "fullName": "Sophia Nakamura",
+            "company": "Quantum Computing Research",
+            "linkedin": "https://www.linkedin.com/in/sophianakamura",
+            "socialLinks": [
+                "https://twitter.com/sophiaquantum",
+                "https://github.com/sophianakamura"
+            ],
+            "yearGraduated": 2020,
+            "description": "Quantum computing researcher specializing in quantum algorithm development, quantum error correction, and quantum cryptography. Passionate about pushing the boundaries of computational possibilities.",
+            "photo": "https://randomuser.me/api/portraits/women/67.jpg"
+        },
+        {
+            "fullName": "Daniel Cruz",
+            "company": "Robotics Engineering",
+            "linkedin": "https://www.linkedin.com/in/danielcruz",
+            "socialLinks": [
+                "https://twitter.com/danielrobotics",
+                "https://github.com/danielcruz"
+            ],
+            "yearGraduated": 2017,
+            "description": "Robotics engineer focusing on industrial automation, machine learning in robotics, and human-robot interaction. Dedicated to developing intelligent robotic systems that enhance human capabilities.",
+            "photo": "https://randomuser.me/api/portraits/men/76.jpg"
+        },
+        {
+            "fullName": "Amara Johnson",
+            "company": "Biotechnology Innovations",
+            "linkedin": "https://www.linkedin.com/in/amarajohnson",
+            "socialLinks": [
+                "https://twitter.com/amarabiotech",
+                "https://instagram.com/amarajohnson"
+            ],
+            "yearGraduated": 2019,
+            "description": "Biotechnology researcher specializing in gene therapy, regenerative medicine, and personalized healthcare solutions. Committed to developing groundbreaking medical technologies that improve human health.",
+            "photo": "https://randomuser.me/api/portraits/women/53.jpg"
+        },
+        {
+            "fullName": "Liam Rodriguez",
+            "company": "Artificial Intelligence",
+            "linkedin": "https://www.linkedin.com/in/liamrodriguez",
+            "socialLinks": [
+                "https://twitter.com/liamairesearch",
+                "https://medium.com/@liamrodriguez"
+            ],
+            "yearGraduated": 2018,
+            "description": "AI research scientist focusing on deep learning, neural network architectures, and AI ethics. Passionate about developing responsible and innovative artificial intelligence technologies.",
+            "photo": "https://randomuser.me/api/portraits/men/68.jpg"
+        },
+        {
+            "fullName": "Elena Kim",
+            "company": "Sustainable Energy",
+            "linkedin": "https://www.linkedin.com/in/elenakim",
+            "socialLinks": [
+                "https://twitter.com/elenaenergy",
+                "https://instagram.com/elenakim"
+            ],
+            "yearGraduated": 2020,
+            "description": "Sustainable energy engineer specializing in renewable energy technologies, energy storage solutions, and grid optimization. Dedicated to accelerating the transition to clean, sustainable energy systems.",
+            "photo": "https://randomuser.me/api/portraits/women/81.jpg"
+        }
+    ]
+}
