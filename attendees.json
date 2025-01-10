@@ -3,6 +3,7 @@
         {
             "fullName": "Jane Doe",
             "company": "Tech Innovations Inc.",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/janedoe",
             "socialLinks": [
                 "https://twitter.com/janedoe",
@@ -16,6 +17,7 @@
         {
             "fullName": "John Smith",
             "company": "Global Solutions LLC",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/johnsmith",
             "socialLinks": [
                 "https://twitter.com/johnsmith",
@@ -28,31 +30,34 @@
         },
         {
             "fullName": "Emily Rodriguez",
-            "company": "Green Energy Solutions",
+            "company": "AI Research Lab",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/emilyrodriguez",
             "socialLinks": [
-                "https://twitter.com/emilytech",
-                "https://github.com/emilyrod"
+                "https://twitter.com/emilyai",
+                "https://github.com/emilyrodriguez"
             ],
             "yearGraduated": 2019,
-            "description": "Sustainability consultant specializing in renewable energy technologies and environmental impact assessment. Dedicated to developing innovative strategies for reducing carbon footprint and promoting sustainable development.",
-            "photo": "https://randomuser.me/api/portraits/women/65.jpg"
+            "description": "AI research scientist specializing in machine learning, neural network architectures, and ethical AI development. Passionate about creating responsible and innovative artificial intelligence technologies.",
+            "photo": "https://randomuser.me/api/portraits/women/33.jpg"
         },
         {
             "fullName": "Michael Chang",
-            "company": "FinTech Innovations",
+            "company": "Robotics Innovations",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/michaelchang",
             "socialLinks": [
-                "https://twitter.com/mikefintech",
-                "https://medium.com/@michaelchang"
+                "https://twitter.com/michaelrobotics",
+                "https://github.com/michaelchang"
             ],
-            "yearGraduated": 2017,
-            "description": "Blockchain developer and cryptocurrency researcher. Passionate about decentralized finance and emerging technologies. Exploring the potential of blockchain to revolutionize financial systems and create more transparent, secure transactions.",
-            "photo": "https://randomuser.me/api/portraits/men/79.jpg"
+            "yearGraduated": 2018,
+            "description": "Robotics engineer focusing on advanced automation, machine vision, and intelligent control systems. Dedicated to developing cutting-edge robotic technologies that enhance human capabilities.",
+            "photo": "https://randomuser.me/api/portraits/men/44.jpg"
         },
         {
             "fullName": "Sophia Lee",
             "company": "Healthcare Dynamics",
+            "department": "Bioengineering (BIOE)",
             "linkedin": "https://www.linkedin.com/in/sophialee",
             "socialLinks": [
                 "https://twitter.com/sophiahealth",
@@ -65,18 +70,20 @@
         {
             "fullName": "David Kim",
             "company": "Cloud Native Systems",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/davidkim",
             "socialLinks": [
                 "https://github.com/davidcloud",
                 "https://medium.com/@davidtechblog"
             ],
             "yearGraduated": 2015,
-            "description": "Senior cloud architect with expertise in Kubernetes, microservices, and scalable infrastructure design. Passionate about building highly available and secure cloud systems that drive business success.",
+            "description": "Senior cloud architect with expertise in cloud architecture, migration, and security. Passionate about building highly available and secure cloud systems that drive business success.",
             "photo": "https://randomuser.me/api/portraits/men/61.jpg"
         },
         {
             "fullName": "Olivia Martinez",
             "company": "Creative Media Studios",
+            "department": "Human-Computer Interaction (HCI)",
             "linkedin": "https://www.linkedin.com/in/oliviamartinez",
             "socialLinks": [
                 "https://instagram.com/olivia_creative",
@@ -89,6 +96,7 @@
         {
             "fullName": "Alex Wong",
             "company": "Quantum Research Labs",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/alexwong",
             "socialLinks": [
                 "https://twitter.com/alexquantum",
@@ -101,6 +109,7 @@
         {
             "fullName": "Emma Thompson",
             "company": "Global Education Initiatives",
+            "department": "Learning Sciences and Technologies (LST)",
             "linkedin": "https://www.linkedin.com/in/emmathompson",
             "socialLinks": [
                 "https://twitter.com/emma_edtech",
@@ -113,6 +122,7 @@
         {
             "fullName": "Ethan Hall",
             "company": "Cybersecurity Solutions",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/ethanhall",
             "socialLinks": [
                 "https://twitter.com/ethanhallsec",
@@ -125,6 +135,7 @@
         {
             "fullName": "Ava Chen",
             "company": "Artificial Intelligence Lab",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/avachen",
             "socialLinks": [
                 "https://twitter.com/avachenai",
@@ -137,6 +148,7 @@
         {
             "fullName": "Liam Patel",
             "company": "Data Science Institute",
+            "department": "Computational Applied Mathematics & Operations (CMOR)",
             "linkedin": "https://www.linkedin.com/in/liampatel",
             "socialLinks": [
                 "https://twitter.com/liampateldata",
@@ -149,6 +161,7 @@
         {
             "fullName": "Sophie Taylor",
             "company": "Digital Marketing Agency",
+            "department": "Marketing and Communications",
             "linkedin": "https://www.linkedin.com/in/sophietaylor",
             "socialLinks": [
                 "https://twitter.com/sophietaylor",
@@ -161,6 +174,7 @@
         {
             "fullName": "Noah Kim",
             "company": "Robotics Engineering",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/noahkim",
             "socialLinks": [
                 "https://twitter.com/noahkimrobot",
@@ -173,6 +187,7 @@
         {
             "fullName": "Mia Garcia",
             "company": "Environmental Sustainability",
+            "department": "Civil and Environmental Engineering (CEE)",
             "linkedin": "https://www.linkedin.com/in/miagarcia",
             "socialLinks": [
                 "https://twitter.com/miagarciaenv",
@@ -185,6 +200,7 @@
         {
             "fullName": "Julian Sanchez",
             "company": "Financial Analysis",
+            "department": "Finance",
             "linkedin": "https://www.linkedin.com/in/juliansanchez",
             "socialLinks": [
                 "https://twitter.com/juliansanchez",
@@ -197,6 +213,7 @@
         {
             "fullName": "Gabriella Martin",
             "company": "Human Resources",
+            "department": "Human Resources and Organizational Development",
             "linkedin": "https://www.linkedin.com/in/gabriellamartin",
             "socialLinks": [
                 "https://twitter.com/gabriellamartin",
@@ -209,6 +226,7 @@
         {
             "fullName": "Caleb Lee",
             "company": "Network Security",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/caleblee",
             "socialLinks": [
                 "https://twitter.com/calebleesec",
@@ -221,6 +239,7 @@
         {
             "fullName": "Ava Moreno",
             "company": "Software Development",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/avamoreno",
             "socialLinks": [
                 "https://twitter.com/avamoreno",
@@ -233,6 +252,7 @@
         {
             "fullName": "Elijah Brooks",
             "company": "Data Engineering",
+            "department": "Computational Applied Mathematics & Operations (CMOR)",
             "linkedin": "https://www.linkedin.com/in/elijahbrooks",
             "socialLinks": [
                 "https://twitter.com/elijahbrooks",
@@ -245,6 +265,7 @@
         {
             "fullName": "Lily Tran",
             "company": "Marketing Strategy",
+            "department": "Marketing and Communications",
             "linkedin": "https://www.linkedin.com/in/lilytran",
             "socialLinks": [
                 "https://twitter.com/lilytran",
@@ -257,6 +278,7 @@
         {
             "fullName": "Logan White",
             "company": "Cloud Computing",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/loganwhite",
             "socialLinks": [
                 "https://twitter.com/loganwhite",
@@ -269,6 +291,7 @@
         {
             "fullName": "Piper Hall",
             "company": "User Experience",
+            "department": "Human-Computer Interaction (HCI)",
             "linkedin": "https://www.linkedin.com/in/piperhall",
             "socialLinks": [
                 "https://twitter.com/piperhall",
@@ -281,6 +304,7 @@
         {
             "fullName": "Remi Patel",
             "company": "Business Intelligence",
+            "department": "Computational Applied Mathematics & Operations (CMOR)",
             "linkedin": "https://www.linkedin.com/in/remipatel",
             "socialLinks": [
                 "https://twitter.com/remipatel",
@@ -293,6 +317,7 @@
         {
             "fullName": "Indigo Rose",
             "company": "Digital Media",
+            "department": "Digital Media and Arts",
             "linkedin": "https://www.linkedin.com/in/indigorose",
             "socialLinks": [
                 "https://twitter.com/indigorose",
@@ -305,6 +330,7 @@
         {
             "fullName": "Cameron Lee",
             "company": "Cybersecurity Consulting",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/cameronlee",
             "socialLinks": [
                 "https://twitter.com/cameronleesec",
@@ -317,6 +343,7 @@
         {
             "fullName": "Astrid Kim",
             "company": "Artificial Intelligence",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/astridkim",
             "socialLinks": [
                 "https://twitter.com/astridkimai",
@@ -329,6 +356,7 @@
         {
             "fullName": "Zara Thompson",
             "company": "Digital Transformation",
+            "department": "Management Science and Engineering",
             "linkedin": "https://www.linkedin.com/in/zarathompson",
             "socialLinks": [
                 "https://twitter.com/zarathompson",
@@ -341,6 +369,7 @@
         {
             "fullName": "Marcus Rodriguez",
             "company": "Renewable Energy",
+            "department": "Civil and Environmental Engineering (CEE)",
             "linkedin": "https://www.linkedin.com/in/marcusrodriguez",
             "socialLinks": [
                 "https://twitter.com/marcusrenew",
@@ -353,6 +382,7 @@
         {
             "fullName": "Elena Petrova",
             "company": "Blockchain Innovation",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/elenapetrova",
             "socialLinks": [
                 "https://twitter.com/elenablockchain",
@@ -365,6 +395,7 @@
         {
             "fullName": "Ryan Chen",
             "company": "Quantum Computing",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/ryanchen",
             "socialLinks": [
                 "https://twitter.com/ryanchenquantum",
@@ -377,6 +408,7 @@
         {
             "fullName": "Aria Nakamura",
             "company": "Space Technology",
+            "department": "Aerospace Engineering",
             "linkedin": "https://www.linkedin.com/in/arianakamura",
             "socialLinks": [
                 "https://twitter.com/ariaspace",
@@ -389,6 +421,7 @@
         {
             "fullName": "Diego Martinez",
             "company": "Augmented Reality",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/diegomartinez",
             "socialLinks": [
                 "https://twitter.com/diegoar",
@@ -401,6 +434,7 @@
         {
             "fullName": "Naomi Singh",
             "company": "Biotech Innovations",
+            "department": "Bioengineering (BIOE)",
             "linkedin": "https://www.linkedin.com/in/naomisingh",
             "socialLinks": [
                 "https://twitter.com/naomibiotech",
@@ -413,6 +447,7 @@
         {
             "fullName": "Lucas Kim",
             "company": "Autonomous Vehicles",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/lucaskim",
             "socialLinks": [
                 "https://twitter.com/lucasautonomous",
@@ -425,6 +460,7 @@
         {
             "fullName": "Valentina Rodriguez",
             "company": "Climate Tech",
+            "department": "Civil and Environmental Engineering (CEE)",
             "linkedin": "https://www.linkedin.com/in/valentinarodriguez",
             "socialLinks": [
                 "https://twitter.com/valentinaclimate",
@@ -437,6 +473,7 @@
         {
             "fullName": "Omar Hassan",
             "company": "Cybersecurity Research",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/omarhassan",
             "socialLinks": [
                 "https://twitter.com/omarinfosec",
@@ -449,6 +486,7 @@
         {
             "fullName": "Emma Larsson",
             "company": "Sustainable Design",
+            "department": "Civil and Environmental Engineering (CEE)",
             "linkedin": "https://www.linkedin.com/in/emmalarsson",
             "socialLinks": [
                 "https://twitter.com/emmasustain",
@@ -461,6 +499,7 @@
         {
             "fullName": "Kai Wong",
             "company": "Fintech Solutions",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/kaiwong",
             "socialLinks": [
                 "https://twitter.com/kaifintec",
@@ -473,6 +512,7 @@
         {
             "fullName": "Isabella Santos",
             "company": "Machine Learning",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/isabellasantos",
             "socialLinks": [
                 "https://twitter.com/isabelladata",
@@ -485,6 +525,7 @@
         {
             "fullName": "Ethan Patel",
             "company": "Internet of Things",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/ethanpatel",
             "socialLinks": [
                 "https://twitter.com/ethaniot",
@@ -497,6 +538,7 @@
         {
             "fullName": "Sophia Nakamura",
             "company": "Quantum Computing Research",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/sophianakamura",
             "socialLinks": [
                 "https://twitter.com/sophiaquantum",
@@ -509,6 +551,7 @@
         {
             "fullName": "Daniel Cruz",
             "company": "Robotics Engineering",
+            "department": "Electrical and Computer Engineering (ECE)",
             "linkedin": "https://www.linkedin.com/in/danielcruz",
             "socialLinks": [
                 "https://twitter.com/danielrobotics",
@@ -521,6 +564,7 @@
         {
             "fullName": "Amara Johnson",
             "company": "Biotechnology Innovations",
+            "department": "Bioengineering (BIOE)",
             "linkedin": "https://www.linkedin.com/in/amarajohnson",
             "socialLinks": [
                 "https://twitter.com/amarabiotech",
@@ -533,6 +577,7 @@
         {
             "fullName": "Liam Rodriguez",
             "company": "Artificial Intelligence",
+            "department": "Computer Science (CS)",
             "linkedin": "https://www.linkedin.com/in/liamrodriguez",
             "socialLinks": [
                 "https://twitter.com/liamairesearch",
@@ -545,6 +590,7 @@
         {
             "fullName": "Elena Kim",
             "company": "Sustainable Energy",
+            "department": "Civil and Environmental Engineering (CEE)",
             "linkedin": "https://www.linkedin.com/in/elenakim",
             "socialLinks": [
                 "https://twitter.com/elenaenergy",
@@ -553,6 +599,32 @@
             "yearGraduated": 2020,
             "description": "Sustainable energy engineer specializing in renewable energy technologies, energy storage solutions, and grid optimization. Dedicated to accelerating the transition to clean, sustainable energy systems.",
             "photo": "https://randomuser.me/api/portraits/women/81.jpg"
+        },
+        {
+            "fullName": "Michael Johnson",
+            "company": "Data Analytics Corp",
+            "department": "Computational Applied Mathematics & Operations (CMOR)",
+            "linkedin": "https://www.linkedin.com/in/michaeljohnson",
+            "socialLinks": [
+                "https://twitter.com/michaeldata",
+                "https://github.com/michaeljohnson"
+            ],
+            "yearGraduated": 2017,
+            "description": "Data scientist specializing in predictive modeling, statistical analysis, and machine learning applications. Committed to transforming raw data into actionable business insights.",
+            "photo": "https://randomuser.me/api/portraits/men/22.jpg"
+        },
+        {
+            "fullName": "Sarah Williams",
+            "company": "Environmental Solutions",
+            "department": "Civil and Environmental Engineering (CEE)",
+            "linkedin": "https://www.linkedin.com/in/sarahwilliams",
+            "socialLinks": [
+                "https://twitter.com/sarahenvironment",
+                "https://instagram.com/sarahwilliams"
+            ],
+            "yearGraduated": 2019,
+            "description": "Environmental engineer focusing on sustainable infrastructure, water resource management, and ecological conservation. Passionate about developing innovative solutions to environmental challenges.",
+            "photo": "https://randomuser.me/api/portraits/women/45.jpg"
         }
     ]
 }

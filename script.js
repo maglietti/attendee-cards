@@ -161,12 +161,19 @@ document.addEventListener('DOMContentLoaded', () => {
             ).join('') 
             : '';
 
+        // Update graduation year display to include department
+        const departmentDisplay = `
+            <p id="graduation-year">
+                <strong> ${attendee.yearGraduated} </strong> <br> 
+                ${attendee.department || 'Department Not Specified'}
+            </p>`;
+
         card.innerHTML = `
             <img src="${photoUrl}" alt="${attendee.fullName}" onerror="this.src='https://via.placeholder.com/300x300'">
             <div class="attendee-card-content">
                 <h2>${attendee.fullName}</h2>
                 <h3>${attendee.company ? `${attendee.company}` : ''}</h3>
-                <p id="graduation-year">Graduated: ${attendee.yearGraduated}</p>
+                ${departmentDisplay}
                 <p id="attendee-description">${attendee.description}</p>
                 <div class="social-links">
                     ${attendee.linkedin ? `<a href="${attendee.linkedin}" target="_blank" rel="noopener noreferrer" title="LinkedIn">
