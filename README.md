@@ -17,7 +17,7 @@ This is a mockup for an event attendees page designed to be integrated with a Dr
 - Minimal external dependencies
 
 ## Setup
-1. Ensure you have a local web server (e.g., Python's `http.server` or PHP's built-in server)
+1. Ensure you have a local web server (e.g., Python's `python3 -m http.server 8000` or PHP's built-in server)
 2. Clone the repository
 3. Run a local server in this directory
 4. Open `index.html` in a browser
