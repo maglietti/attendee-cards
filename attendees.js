@@ -149,7 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update graduation year display to include department
         const departmentDisplay = `
             <p id="graduation-year">
-                <strong> ${attendee.yearGraduated} </strong> <br> 
+                <strong> ${attendee.yearGraduated} </strong>
+            </p>
+            <p id="department"> 
                 ${attendee.department || 'Department Not Specified'}
             </p>`;
 

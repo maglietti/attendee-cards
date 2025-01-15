@@ -66,11 +66,13 @@ h1 {
 }
 
 .attendee-card-content h2 {
+  text-align: center;
   font-size: 1.25rem;
   color: var(--primary-color);
 }
 
 .attendee-card-content h3 {
+  text-align: center;
   font-size: 0.8rem;
   margin-bottom: 0.8rem;
   margin-top: 0;
@@ -95,6 +97,16 @@ h1 {
 }
 
 #graduation-year {
+  font-weight: bold;
+  color: var(--secondary-color);
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+#department {
   color: var(--secondary-color);
   margin-bottom: 0.5rem;
   white-space: nowrap;
