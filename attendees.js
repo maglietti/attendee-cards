@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Determine social platform from URL and return icon class
     function getSocialPlatform(url) {
-        if (url.includes('twitter.com')) return 'fab fa-twitter';
+        if (url.includes('twitter.com') || url.includes('x.com')) return 'fab fa-x-twitter';
         if (url.includes('github.com')) return 'fab fa-github';
         if (url.includes('linkedin.com')) return 'fab fa-linkedin-in';
         if (url.includes('instagram.com')) return 'fab fa-instagram';
