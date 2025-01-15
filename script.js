@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch and render attendees
     async function fetchAttendees() {
         try {
-            const response = await fetch('attendees.json');
+            const response = await fetch('/api/attendees');
             const data = await response.json();
             // Shuffle the attendees array
             allAttendees = shuffleArray(data.attendees);

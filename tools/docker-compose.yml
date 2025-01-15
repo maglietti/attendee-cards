@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: attendees-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: attendees_db
+      MYSQL_USER: attendee_app
+      MYSQL_PASSWORD: app_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+    restart: always
+
+volumes:
+  mysql-data:
