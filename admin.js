@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginModal = document.getElementById('loginModal');
     const loginForm = document.getElementById('loginForm');
     const adminPassword = document.getElementById('adminPassword');
+    const adminContent = document.getElementById('adminContent');
 
     const attendeeModal = document.getElementById('attendeeModal');
     const attendeeForm = document.getElementById('attendeeForm');
@@ -20,17 +21,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const departmentsTableBody = document.getElementById('departmentsTableBody');
     const departmentSelect = document.getElementById('department');
 
-    let adminToken = localStorage.getItem('adminToken');
+    let adminToken = null;
     let currentAttendeeId = null;
     let currentDepartmentId = null;
 
     // Authentication
     function showLoginModal() {
         loginModal.style.display = 'flex';
+        adminContent.style.display = 'none';
+        adminToken = null;
+        localStorage.removeItem('adminToken');
     }
 
     function hideLoginModal() {
         loginModal.style.display = 'none';
+        adminContent.style.display = 'block';
     }
 
     loginForm.addEventListener('submit', async (e) => {
@@ -52,20 +57,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 loadInitialData();
             } else {
                 alert('Invalid admin password');
+                adminPassword.value = ''; // Clear password field
+                adminToken = null;
+                localStorage.removeItem('adminToken');
             }
         } catch (error) {
             console.error('Login error:', error);
             alert('Login failed');
+            adminPassword.value = ''; // Clear password field
+            adminToken = null;
+            localStorage.removeItem('adminToken');
         }
     });
 
     // Check authentication on page load
     function checkAuthentication() {
-        if (!adminToken) {
-            showLoginModal();
-        } else {
-            loadInitialData();
-        }
+        // Always show login modal initially
+        showLoginModal();
     }
 
     // Data Fetching
