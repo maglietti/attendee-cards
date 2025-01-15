@@ -1,20 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     const attendeesGrid = document.getElementById('attendees-grid');
-    const addAttendeeBtn = document.getElementById('add-attendee-btn');
-    const attendeeFormModal = document.getElementById('attendee-form-modal');
-    const closeModalBtn = document.querySelector('.close');
-    const attendeeForm = document.getElementById('attendee-form');
-
-    // Check for admin query parameter
-    function checkAdminAccess() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const isAdmin = urlParams.get('admin') === 'true';
-        
-        // Hide or show add attendee button based on admin status
-        if (addAttendeeBtn) {
-            addAttendeeBtn.style.display = isAdmin ? 'block' : 'none';
-        }
-    }
 
     // Pagination variables
     let currentPage = 1;
@@ -24,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch and render attendees
     async function fetchAttendees() {
         try {
-            const response = await fetch('attendees.json');
+            const response = await fetch('/api/attendees');
             const data = await response.json();
             // Shuffle the attendees array
             allAttendees = shuffleArray(data.attendees);
@@ -164,7 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Update graduation year display to include department
         const departmentDisplay = `
             <p id="graduation-year">
-                <strong> ${attendee.yearGraduated} </strong> <br> 
+                <strong> ${attendee.yearGraduated} </strong>
+            </p>
+            <p id="department"> 
                 ${attendee.department || 'Department Not Specified'}
             </p>`;
 
@@ -189,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Determine social platform from URL and return icon class
     function getSocialPlatform(url) {
-        if (url.includes('twitter.com')) return 'fab fa-twitter';
+        if (url.includes('twitter.com') || url.includes('x.com')) return 'fab fa-x-twitter';
         if (url.includes('github.com')) return 'fab fa-github';
         if (url.includes('linkedin.com')) return 'fab fa-linkedin-in';
         if (url.includes('instagram.com')) return 'fab fa-instagram';
@@ -198,44 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'fas fa-link';
     }
 
-    // Modal functionality
-    addAttendeeBtn.addEventListener('click', () => {
-        attendeeFormModal.style.display = 'block';
-    });
-
-    closeModalBtn.addEventListener('click', () => {
-        attendeeFormModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', (event) => {
-        if (event.target === attendeeFormModal) {
-            attendeeFormModal.style.display = 'none';
-        }
-    });
-
-    // Form submission (for mockup, just logs data)
-    attendeeForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const formData = new FormData(attendeeForm);
-        const newAttendee = {
-            fullName: formData.get('fullName'),
-            company: formData.get('company'),
-            linkedin: formData.get('linkedin'),
-            socialLinks: formData.get('socialLinks') ? formData.get('socialLinks').split(',') : [],
-            yearGraduated: parseInt(formData.get('yearGraduated')),
-            description: formData.get('description'),
-            photo: formData.get('photo') ? URL.createObjectURL(formData.get('photo')) : null
-        };
-
-        // In a real app, you'd send this to a backend
-        console.log('New Attendee:', newAttendee);
-        attendeeFormModal.style.display = 'none';
-        attendeeForm.reset();
-    });
-
     // Initial fetch
     fetchAttendees();
-
-    // Check for admin access
-    checkAdminAccess();
 });

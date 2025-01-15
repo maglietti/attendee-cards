@@ -1,57 +1,124 @@
-# Event Attendees Page
+# Attendee Cards Application
 
 ## Overview
-This is a mockup for an event attendees page designed to be integrated with a Drupal site. The page displays attendee information in a responsive grid layout with the ability to add new attendees.
+Attendee Cards is a dynamic web application designed to showcase and manage professional profiles for graduates, students, or team members. The application provides an interactive platform to display attendee information with a clean, modern interface.
 
 ## Features
-- Responsive grid layout for attendee cards
-- Modal form for adding new attendees
-- Dynamic rendering of attendee information
-- Fallback for missing photos
-- Social media link integration
 
-## Technical Considerations for Drupal Integration
-- Vanilla JavaScript used for maximum compatibility
-- CSS variables for easy theming
-- Modular file structure
-- Minimal external dependencies
+### User-Facing Features
+- **Interactive Attendee Grid**: Browse through professional profiles
+- **Responsive Design**: Fully responsive layout for desktop and mobile devices
+- **Pagination**: Easily navigate through multiple attendee profiles
+- **Social Media Integration**: Display links to various social platforms
+- **Department and Graduation Year Display**
 
-## Setup
-1. Ensure you have a local web server (e.g., Python's `python3 -m http.server 8000` or PHP's built-in server)
-2. Clone the repository
-3. Run a local server in this directory
-4. Open `index.html` in a browser
+### Admin Dashboard Features
+- **Secure Admin Authentication**: JWT-based login system
+- **Attendee Management**:
+  - Add new attendees
+  - Edit existing attendee profiles
+  - Delete attendee records
+- **Department Management**:
+  - Add, edit, and delete departments
+  - Manage department associations for attendees
 
-## Admin Access
+## Technology Stack
+- **Frontend**: 
+  - HTML5
+  - CSS3
+  - Vanilla JavaScript
+- **Backend**: 
+  - Node.js
+  - Express.js
+- **Database**: 
+  - MySQL
+- **Authentication**: 
+  - JSON Web Tokens (JWT)
 
-### Adding New Attendees
+## Prerequisites
+- Node.js (v14 or later)
+- MySQL
+- npm (Node Package Manager)
 
-The "Add Attendee" button is hidden by default for security reasons. To access the button and add new attendees, append the `admin` query parameter to the URL:
+## Installation
 
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/attendee-cards.git
+cd attendee-cards
 ```
-http://localhost:3000/?admin=true
+
+### 2. Install Dependencies
+```bash
+npm install
 ```
 
-#### Example URLs
-- Local development: `http://localhost:3000/?admin=true`
-- Deployed site: `https://yoursite.com/attendees?admin=true`
+### 3. Configure Environment Variables
+Create a `.env` file in the project root with the following variables:
+```
+# MySQL Database Configuration
+DB_HOST=localhost
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_NAME=attendees_db
+DB_PORT=3306
 
-**Note:** Only use the admin parameter in secure, controlled environments. Do not share admin URLs publicly.
+# Admin Configuration
+ADMIN_PASSWORD=your_secure_admin_password
+JWT_SECRET=a_very_long_random_string_for_jwt_signing
+```
 
-## Future Improvements
-- Backend integration for persistent data storage
-- Server-side rendering
-- Enhanced form validation
-- LinkedIn profile photo API integration
+### 4. Set Up Database
+Ensure MySQL is running and create the necessary database and tables. Refer to the database schema in your project documentation.
 
-## Dependencies
-- No external libraries required
-- Recommended to add Font Awesome for social media icons in production
+### 5. Start the Application
+```bash
+npm start
+```
 
-## Browser Compatibility
-Tested on modern browsers (Chrome, Firefox, Safari, Edge)
+## Usage
 
-## Drupal Integration Notes
-- Replace `fetch()` with Drupal's AJAX methods
-- Use Drupal's form API for attendee submission
-- Adapt CSS to match Drupal theme
+### Accessing the Application
+- **Main Page**: View attendee profiles
+- **Admin Dashboard**: 
+  - URL: `/admin.html`
+  - Login with the admin password configured in `.env`
+
+### Admin Dashboard Capabilities
+- Add, edit, and remove attendees
+- Manage departments
+- Update profile information
+- Handle social media links
+
+## Social Media Link Support
+The application supports the following social media platforms:
+- LinkedIn
+- GitHub
+- X (formerly Twitter)
+- Instagram
+- Facebook
+- Medium
+
+## Customization
+- Modify `styles.css` to change the application's look and feel
+- Update environment variables for database and authentication settings
+
+## Security Considerations
+- Admin access is protected by JWT authentication
+- Passwords are securely managed
+- Sensitive information is not exposed in client-side code
+
+## Contributing
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+Your Name - maglietti@me.com
+
+Project Link: [https://github.com/your-username/attendee-cards](https://github.com/your-username/attendee-cards)

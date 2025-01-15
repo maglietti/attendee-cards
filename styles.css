@@ -66,11 +66,13 @@ h1 {
 }
 
 .attendee-card-content h2 {
+  text-align: center;
   font-size: 1.25rem;
   color: var(--primary-color);
 }
 
 .attendee-card-content h3 {
+  text-align: center;
   font-size: 0.8rem;
   margin-bottom: 0.8rem;
   margin-top: 0;
@@ -95,6 +97,16 @@ h1 {
 }
 
 #graduation-year {
+  font-weight: bold;
+  color: var(--secondary-color);
+  margin-bottom: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+#department {
   color: var(--secondary-color);
   margin-bottom: 0.5rem;
   white-space: nowrap;
@@ -232,4 +244,124 @@ h1 {
 .pagination span {
   font-size: 1rem;
   color: var(--primary-color);
+}
+
+/* Admin Dashboard Styles */
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.admin-section {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.admin-controls {
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-controls table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.admin-controls table, 
+.admin-controls th, 
+.admin-controls td {
+    border: 1px solid #ddd;
+}
+
+.admin-controls th, 
+.admin-controls td {
+    padding: 10px;
+    text-align: left;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.modal .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal .close:hover {
+    color: black;
+}
+
+#loginModal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.modal input, 
+.modal select, 
+.modal textarea {
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+.modal button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.modal button:hover {
+    background-color: #0056b3;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+    }
+
+    .admin-container {
+        padding: 10px;
+    }
 }
