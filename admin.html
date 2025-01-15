@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendee Cards - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .admin-section {
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .admin-controls {
+            display: flex;
+            flex-direction: column;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+        #loginModal {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input, select, textarea {
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Admin Dashboard</h1>
+        
+        <div class="admin-section">
+            <h2>Attendees Management</h2>
+            <div class="admin-controls">
+                <button id="addAttendeeBtn">Add New Attendee</button>
+                <table id="attendeesTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Department</th>
+                            <th>Company</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendeesTableBody">
+                        <!-- Attendees will be dynamically populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="admin-section">
+            <h2>Departments Management</h2>
+            <div class="admin-controls">
+                <button id="addDepartmentBtn">Add New Department</button>
+                <table id="departmentsTable">
+                    <thead>
+                        <tr>
+                            <th>Department Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="departmentsTableBody">
+                        <!-- Departments will be dynamically populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Modal for Add/Edit Attendee -->
+        <div id="attendeeModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeAttendeeModal">&times;</span>
+                <h2 id="attendeeModalTitle">Add/Edit Attendee</h2>
+                <form id="attendeeForm">
+                    <input type="hidden" id="attendeeId">
+                    <input type="text" id="fullName" placeholder="Full Name" required>
+                    <input type="text" id="company" placeholder="Company">
+                    <select id="department" required>
+                        <!-- Departments will be dynamically populated -->
+                    </select>
+                    <input type="text" id="linkedin" placeholder="LinkedIn Profile URL">
+                    <input type="text" id="socialLinks" placeholder="Other Social Links (comma-separated)">
+                    <input type="number" id="yearGraduated" placeholder="Year Graduated">
+                    <textarea id="description" placeholder="Brief Description"></textarea>
+                    <input type="text" id="photoUrl" placeholder="Photo URL">
+                    <div class="action-buttons">
+                        <button type="submit">Save</button>
+                        <button type="button" id="cancelAttendeeBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal for Add/Edit Department -->
+        <div id="departmentModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="closeDepartmentModal">&times;</span>
+                <h2 id="departmentModalTitle">Add/Edit Department</h2>
+                <form id="departmentForm">
+                    <input type="hidden" id="departmentId">
+                    <input type="text" id="departmentName" placeholder="Department Name" required>
+                    <div class="action-buttons">
+                        <button type="submit">Save</button>
+                        <button type="button" id="cancelDepartmentBtn">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Login Modal -->
+        <div id="loginModal" class="modal" style="display: flex;">
+            <div class="modal-content">
+                <h2>Admin Login</h2>
+                <form id="loginForm">
+                    <input type="password" id="adminPassword" placeholder="Admin Password" required>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
