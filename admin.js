@@ -179,6 +179,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     attendeeForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // Check if admin token exists
+        if (!adminToken) {
+            alert('Please log in first');
+            showLoginModal();
+            return;
+        }
+
         const formData = {
             fullName: document.getElementById('fullName').value,
             company: document.getElementById('company').value,
@@ -210,11 +218,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 attendeeModal.style.display = 'none';
             } else {
                 const errorData = await response.json();
-                alert(`Error: ${errorData.error}`);
+                alert(`Error: ${errorData.error || 'Failed to save attendee'}`);
             }
         } catch (error) {
             console.error('Error saving attendee:', error);
-            alert('Failed to save attendee');
+            alert('Failed to save attendee. Please check your connection and try again.');
         }
     });
 
