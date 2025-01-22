@@ -50,3 +50,5 @@ temp/
 # Miscellaneous
 .cache/
 .pytest_cache/
+owl-connect/
+logs/
