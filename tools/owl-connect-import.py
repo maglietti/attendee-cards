@@ -19,7 +19,7 @@ logger.setLevel(logging.INFO)
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
 
-# Create file handler which logs even debug messages
+# Create file handler and set level to DEBUG
 log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
 os.makedirs(log_dir, exist_ok=True)
 file_handler = RotatingFileHandler(
@@ -40,10 +40,6 @@ file_handler.setFormatter(file_formatter)
 # Add handlers to logger
 logger.addHandler(console_handler)
 logger.addHandler(file_handler)
-
-def setup_logger():
-    """Configure and return a logger with file and console output"""
-    return logger
 
 def sanitize_column_name(name):
     """Sanitize column names for SQL compatibility"""
@@ -86,6 +82,7 @@ def create_sqlalchemy_engine(db_config):
     )
     return create_engine(connection_string)
 
+# Base class for SQLAlchemy ORM models, enabling declarative table definitions
 Base = declarative_base()
 
 class CDCChangeLog(Base):
@@ -178,17 +175,13 @@ def ensure_table_exists(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine,
             t.lower().replace('-', '_') == table_name.lower().replace('-', '_'))
     ]
     
+    # Use the exact table name from matching tables
+    exact_table_name = matching_tables[0]
+    logger.debug(f"Found matching table: {exact_table_name}")
+    
     # First-time import or table doesn't exist
     if not matching_tables:
         logger.warning(f"No table found matching '{table_name}'. Performing first-time import.")
-        
-        # Provide more detailed logging about potential matches
-        similar_tables = [
-            t for t in all_tables 
-            if table_name.lower() in t.lower() or t.lower() in table_name.lower()
-        ]
-        if similar_tables:
-            logger.info(f"Similar tables found: {similar_tables}")
         
         # Add hash column for tracking
         df['record_hash'] = df.apply(compute_record_hash, axis=1)
@@ -226,10 +219,6 @@ def ensure_table_exists(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine,
         
         logger.info(f"First-time import: {changes['inserts']} records inserted")
         return changes
-    
-    # Use the exact table name from matching tables
-    exact_table_name = matching_tables[0]
-    logger.debug(f"Found matching table: {exact_table_name}")
     
     # Return a dictionary with the table name for consistency
     return {
@@ -346,7 +335,32 @@ def perform_cdc(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine, table_n
         session.close()
 
 def import_excel_to_mysql(excel_path, sheet_name, engine):
-    """Updated import function with CDC"""
+    """
+    Import an Excel file to a MySQL database with Change Data Capture (CDC) functionality.
+
+    This function reads an Excel file, sanitizes column names, performs change tracking,
+    and imports the data into a MySQL database table named 'owl_connect_export'.
+
+    Args:
+        excel_path (str): Full path to the Excel file to be imported.
+        sheet_name (str): Name of the sheet in the Excel file to import.
+        engine (sqlalchemy.engine.base.Engine): SQLAlchemy database connection engine.
+
+    Returns:
+        pandas.DataFrame: The imported DataFrame with sanitized column names.
+
+    Raises:
+        FileNotFoundError: If the specified Excel file does not exist.
+        ValueError: If the sheet_name is invalid or does not exist in the Excel file.
+        sqlalchemy.exc.SQLAlchemyError: For database connection or import errors.
+        Exception: For any other unexpected errors during the import process.
+
+    Notes:
+        - Column names are automatically sanitized to be SQL-friendly.
+        - Uses Change Data Capture (CDC) to track and log data changes.
+        - Existing data in the 'owl_connect_export' table will be replaced.
+        - Logs import progress and any errors encountered.
+    """
     try:
         # Read Excel file
         df = pd.read_excel(excel_path, sheet_name=sheet_name)
@@ -368,8 +382,6 @@ def import_excel_to_mysql(excel_path, sheet_name, engine):
         raise
 
 def main():
-    # Setup logger
-    logger = setup_logger()
     
     try:
         # Excel file configuration
