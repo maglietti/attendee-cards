@@ -11,49 +11,46 @@ from datetime import datetime
 from sqlalchemy import Column, String, DateTime, Text, Integer, inspect
 from sqlalchemy.orm import declarative_base, scoped_session, sessionmaker
 
+# Create a global logger
+logger = logging.getLogger('owl_connect_import')
+logger.setLevel(logging.INFO)
+
+# Create console handler and set level to INFO
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+
+# Create file handler which logs even debug messages
+log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
+os.makedirs(log_dir, exist_ok=True)
+file_handler = RotatingFileHandler(
+    os.path.join(log_dir, 'owl_connect_import.log'),
+    maxBytes=1048576,  # 1MB
+    backupCount=5
+)
+file_handler.setLevel(logging.DEBUG)
+
+# Create formatters
+console_formatter = logging.Formatter('%(levelname)s: %(message)s')
+file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+# Add formatters to handlers
+console_handler.setFormatter(console_formatter)
+file_handler.setFormatter(file_formatter)
+
+# Add handlers to logger
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+
 def setup_logger():
     """Configure and return a logger with file and console output"""
-    # Create a logger
-    logger = logging.getLogger('owl_connect_import')
-    logger.setLevel(logging.DEBUG)
-
-    # Create console handler and set level to INFO
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
-
-    # Create file handler which logs even debug messages
-    log_dir = os.path.join(os.path.dirname(__file__), '..', 'logs')
-    os.makedirs(log_dir, exist_ok=True)
-    file_handler = RotatingFileHandler(
-        os.path.join(log_dir, 'owl_connect_import.log'),
-        maxBytes=1048576,  # 1MB
-        backupCount=5
-    )
-    file_handler.setLevel(logging.DEBUG)
-
-    # Create formatters
-    console_formatter = logging.Formatter('%(levelname)s: %(message)s')
-    file_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-    # Add formatters to handlers
-    console_handler.setFormatter(console_formatter)
-    file_handler.setFormatter(file_formatter)
-
-    # Add handlers to logger
-    logger.addHandler(console_handler)
-    logger.addHandler(file_handler)
-
     return logger
 
-def sanitize_column_name(name, logger):
-    """Sanitize column names"""
-    # Convert to lowercase
-    name = name.lower()
-    # Replace any non-alphanumeric characters with underscores
-    name = re.sub(r'[^a-z0-9]+', '_', name)
-    # Remove leading/trailing underscores
-    name = name.strip('_')
-    # Ensure it doesn't start with a number
+def sanitize_column_name(name):
+    """Sanitize column names for SQL compatibility"""
+    # Remove special characters and replace with underscores
+    name = re.sub(r'[^a-zA-Z0-9_]', '_', str(name)).lower()
+    
+    # Ensure the name doesn't start with a number
     if name[0].isdigit():
         name = f'col_{name}'
     
@@ -103,25 +100,41 @@ class CDCChangeLog(Base):
     new_data = Column(Text, nullable=True)
     changed_at = Column(DateTime, default=datetime.utcnow)
 
-def compute_record_hash(row, logger):
+def compute_record_hash(row, exclude_columns=None):
     """
     Generate a unique, consistent hash for a record to track changes
     
     Args:
         row (pd.Series): A single row of data
+        exclude_columns (list, optional): Columns to exclude from hash generation
     
     Returns:
         str: A consistent MD5 hash for the row
     """
-    # Remove any columns that might introduce non-determinism (e.g., timestamps)
-    # You may need to customize this list based on your specific data
-    exclude_columns = ['created_at', 'updated_at', 'timestamp']
+    # Default list of columns to exclude
+    if exclude_columns is None:
+        exclude_columns = [
+            'created_at', 'updated_at', 'timestamp', 
+            'record_hash', 'registrant_date'
+        ]
     
-    # Create a filtered dictionary of the row, excluding non-deterministic columns
-    filtered_row = {
-        k: str(v).strip() if v is not None else '' 
-        for k, v in row.drop(exclude_columns, errors='ignore').items()
-    }
+    # Create a filtered dictionary of the row, excluding specified columns
+    filtered_row = {}
+    for k, v in row.items():
+        if k not in exclude_columns:
+            # Consistent handling of various "empty" values
+            if pd.isna(v) or v is None:
+                # Normalize all "empty" values to a consistent string
+                filtered_row[k] = 'null'
+            elif isinstance(v, (int, float)):
+                # Truncate long numbers to first 10 digits
+                filtered_row[k] = str(int(v))[:10] if len(str(v)) > 10 else str(v)
+            elif isinstance(v, str):
+                # Strip whitespace, convert to lowercase
+                filtered_row[k] = v.strip().lower()
+            else:
+                # Convert all other types to lowercase string
+                filtered_row[k] = str(v).strip().lower()
     
     # Sort the dictionary to ensure consistent ordering
     sorted_items = sorted(filtered_row.items())
@@ -130,22 +143,24 @@ def compute_record_hash(row, logger):
     row_str = '|'.join(f"{k}:{v}" for k, v in sorted_items)
     
     # Create the hash for this row
-    hash = hashlib.md5(row_str.encode('utf-8')).hexdigest()
+    hash_value = hashlib.md5(row_str.encode('utf-8')).hexdigest()
     
-    # Log the generated hash
-    logger.debug(f"Generated hash for record: {hash} - {row_str}")
+    # Log detailed hash generation information
+    logger.debug(f"Hash Generation Details:")
+    logger.debug(f"  Raw Row Data: {dict(row)}")
+    logger.debug(f"  Filtered Row Data: {filtered_row}")
+    logger.debug(f"  Row String: {row_str}")
+    logger.debug(f"  Generated Hash: {hash_value}")
     
-    # Return the hash
-    return hash
+    return hash_value
 
-def perform_cdc(df, engine, logger, table_name='owl_connect_export'):
+def perform_cdc(df, engine, table_name='owl_connect_export'):
     """
     Perform Change Data Capture by comparing new data with existing data
     
     Args:
         df (pd.DataFrame): New dataframe to import
         engine (sqlalchemy.engine.base.Engine): Database engine
-        logger (logging.Logger): Logger instance
         table_name (str): Name of the target table
     
     Returns:
@@ -205,77 +220,71 @@ def perform_cdc(df, engine, logger, table_name='owl_connect_export'):
         
         # Read existing data from the table
         existing_df = pd.read_sql_table(exact_table_name, engine)
+        logger.info(f"Total existing records: {exact_table_name}: {len(existing_df)}")
         
         # Add hash columns to both dataframes for tracking
         df['record_hash'] = df.apply(compute_record_hash, axis=1)
         existing_df['record_hash'] = existing_df.apply(compute_record_hash, axis=1)
         
+        # Log hash generation details for debugging
+        logger.debug(f"New DataFrame first hash: {df['record_hash'].iloc[0]} - {df.head(1).to_json()}")
+        logger.debug(f"Existing DataFrame first hash: {existing_df['record_hash'].iloc[0]} - {existing_df.head(1).to_json()}")
+        
         # Track changes
         inserts_count = 0
         updates_count = 0
         deletes_count = 0
-        
-        # Identify changes with more precise logic
-        # Only consider a record deleted if it's not in the new dataset
-        # AND the new dataset is not empty
-        if not df.empty:
-            deletes = existing_df[~existing_df['record_hash'].isin(df['record_hash'])]
-            
-            # Log deletions only if there are actual records to delete
-            for _, row in deletes.iterrows():
-                change_log = CDCChangeLog(
-                    change_type='DELETE',
-                    table_name=exact_table_name,
-                    record_id=row['record_hash'],
-                    old_data=str(row.drop('record_hash'))
-                )
-                session.add(change_log)
-                deletes_count += 1
-                
-                logger.debug(f"DELETE: Record with hash {row['record_hash']} will be removed from {exact_table_name}")
+        no_changes_count = 0  # Track rows with no changes
         
         # Detect and handle updates and inserts
         for _, new_row in df.iterrows():
-            # Find matching rows in existing data by hash
+            # Early check: Find matching rows in existing data by hash
             matching_rows = existing_df[existing_df['record_hash'] == new_row['record_hash']]
             
+            # If hash matches, it's potentially an unchanged record
             if len(matching_rows) > 0:
-                # Potential update scenario
-                existing_row = matching_rows.iloc[0]
-                
-                # Compare full row data (excluding hash)
-                new_row_dict = new_row.drop('record_hash').to_dict()
-                existing_row_dict = existing_row.drop('record_hash').to_dict()
-                
-                # Detect if any values have changed
-                if any(new_row_dict.get(k) != existing_row_dict.get(k) for k in new_row_dict):
-                    # Log update
-                    change_log = CDCChangeLog(
-                        change_type='UPDATE',
-                        table_name=exact_table_name,
-                        record_id=new_row['record_hash'],
-                        old_data=str(existing_row_dict),
-                        new_data=str(new_row_dict)
-                    )
-                    session.add(change_log)
-                    updates_count += 1
-                    
-                    logger.debug(f"UPDATE: Record with hash {new_row['record_hash']} in {exact_table_name}")
-                    logger.debug(f"Old data: {existing_row_dict}")
-                    logger.debug(f"New data: {new_row_dict}")
-            else:
-                # New record
-                change_log = CDCChangeLog(
-                    change_type='INSERT',
-                    table_name=exact_table_name,
-                    record_id=new_row['record_hash'],
-                    new_data=str(new_row.drop('record_hash').to_dict())
-                )
-                session.add(change_log)
-                inserts_count += 1
-                
-                logger.debug(f"INSERT: New record with hash {new_row['record_hash']} in {exact_table_name}")
-                logger.debug(f"Inserted data: {new_row.drop('record_hash').to_dict()}")
+                # Early exit if hash is identical
+                no_changes_count += 1
+                logger.debug(f"NO CHANGE: Record with hash {new_row['record_hash']} remains unchanged")
+                continue
+            
+            # If no matching hash, treat as a new record
+            change_log = CDCChangeLog(
+                change_type='INSERT',
+                table_name=exact_table_name,
+                record_id=new_row['record_hash'],
+                new_data=str(new_row.drop('record_hash'))
+            )
+            session.add(change_log)
+            inserts_count += 1
+            
+            logger.debug(f"INSERT: New record with hash {new_row['record_hash']} added")
+        
+        # Additional pass to detect updates in existing records
+        for _, existing_row in existing_df.iterrows():
+            # Skip if the record's hash is in the new dataset
+            if existing_row['record_hash'] in df['record_hash'].values:
+                continue
+            
+            # This is a record to be deleted
+            change_log = CDCChangeLog(
+                change_type='DELETE',
+                table_name=exact_table_name,
+                record_id=existing_row['record_hash'],
+                old_data=str(existing_row.drop('record_hash'))
+            )
+            session.add(change_log)
+            deletes_count += 1
+            
+            logger.debug(f"DELETE: Record with hash {existing_row['record_hash']} will be removed from {exact_table_name}")
+        
+        # Log summary of changes
+        logger.info(f"Change Summary for {exact_table_name}:")
+        logger.info(f"  Inserts: {inserts_count}")
+        logger.info(f"  Updates: {updates_count}")
+        logger.info(f"  Unchanged: {no_changes_count}")
+        logger.info(f"  Deletes: {deletes_count}")
+        logger.info(f"  Total Processed: {len(df)}")
         
         # Commit changes to change log
         session.commit()
@@ -295,17 +304,17 @@ def perform_cdc(df, engine, logger, table_name='owl_connect_export'):
     finally:
         session.close()
 
-def import_excel_to_mysql(excel_path, sheet_name, engine, logger):
+def import_excel_to_mysql(excel_path, sheet_name, engine):
     """Updated import function with CDC"""
     try:
         # Read Excel file
         df = pd.read_excel(excel_path, sheet_name=sheet_name)
         
         # Rename columns to be SQL-friendly
-        df.columns = [sanitize_column_name(col, logger) for col in df.columns]
+        df.columns = [sanitize_column_name(col) for col in df.columns]
         
         # Perform Change Data Capture
-        df = perform_cdc(df, engine, logger)
+        df = perform_cdc(df, engine)
         
         # Import to MySQL
         logger.info(f"Importing data from {excel_path}")
@@ -333,7 +342,7 @@ def main():
         engine = create_sqlalchemy_engine(db_config)
         
         # Import Excel to MySQL
-        df = import_excel_to_mysql(excel_path, sheet_name, engine, logger)
+        df = import_excel_to_mysql(excel_path, sheet_name, engine)
     
     except Exception as e:
         logger.error(f"An error occurred: {e}")
