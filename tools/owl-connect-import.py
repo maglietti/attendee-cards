@@ -154,17 +154,19 @@ def compute_record_hash(row, exclude_columns=None):
     
     return hash_value
 
-def perform_cdc(df, engine, table_name='owl_connect_export'):
+def perform_cdc(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine, table_name: str = 'owl-connect-export') -> dict:
     """
-    Perform Change Data Capture by comparing new data with existing data
+    Perform Change Data Capture (CDC) on a given DataFrame.
+    
+    Identifies and logs changes between the input DataFrame and existing database records.
     
     Args:
-        df (pd.DataFrame): New dataframe to import
-        engine (sqlalchemy.engine.base.Engine): Database engine
-        table_name (str): Name of the target table
+        df (pd.DataFrame): New data to be compared with existing records
+        engine (sqlalchemy.engine.base.Engine): Database connection engine
+        table_name (str, optional): Name of the target table. Defaults to 'owl-connect-export'.
     
     Returns:
-        pd.DataFrame: DataFrame with change tracking information
+        dict: Summary of changes detected during the import process
     """
     # Create a session
     Session = scoped_session(sessionmaker(bind=engine))
@@ -174,81 +176,37 @@ def perform_cdc(df, engine, table_name='owl_connect_export'):
     Base.metadata.create_all(engine)
     
     try:
-        # Check for case-insensitive and hyphen/underscore flexible table name match
-        inspector = inspect(engine)
-        all_tables = inspector.get_table_names()
-        logger.debug(f"All tables in database: {all_tables}")
-        
-        matching_tables = [
-            t for t in all_tables 
-            if (t.lower() == table_name.lower() or 
-                t.lower().replace('-', '_') == table_name.lower().replace('-', '_'))
-        ]
-        
-        if not matching_tables:
-            logger.warning(f"No table found matching '{table_name}'. Performing first-time import.")
-            
-            # Provide more detailed logging about potential matches
-            similar_tables = [
-                t for t in all_tables 
-                if table_name.lower() in t.lower() or t.lower() in table_name.lower()
-            ]
-            if similar_tables:
-                logger.info(f"Similar tables found: {similar_tables}")
-            
-            # First-time import logic remains the same
-            inserts_count = len(df)
-            for _, new_row in df.iterrows():
-                new_row_hash = compute_record_hash(new_row)
-                
-                change_log = CDCChangeLog(
-                    change_type='INSERT',
-                    table_name=table_name,
-                    record_id=new_row_hash,
-                    new_data=str(new_row.to_dict())
-                )
-                session.add(change_log)
-            
-            session.commit()
-            logger.info(f"First-time import: {inserts_count} records inserted")
-            
-            return df
-        
-        # Use the exact table name from matching tables
-        exact_table_name = matching_tables[0]
-        logger.debug(f"Found matching table: {exact_table_name}")
+        # Validate input
+        if df.empty:
+            logger.warning(f"Empty DataFrame provided for table {table_name}. No changes processed.")
+            return {
+                'inserts': 0,
+                'updates': 0,
+                'deletes': 0,
+                'unchanged': 0,
+                'total_processed': 0
+            }
         
         # Read existing data from the table
+        exact_table_name = table_name.lower()
         existing_df = pd.read_sql_table(exact_table_name, engine)
-        logger.info(f"Total existing records: {exact_table_name}: {len(existing_df)}")
         
         # Add hash columns to both dataframes for tracking
         df['record_hash'] = df.apply(compute_record_hash, axis=1)
         existing_df['record_hash'] = existing_df.apply(compute_record_hash, axis=1)
         
-        # Log hash generation details for debugging
-        logger.debug(f"New DataFrame first hash: {df['record_hash'].iloc[0]} - {df.head(1).to_json()}")
-        logger.debug(f"Existing DataFrame first hash: {existing_df['record_hash'].iloc[0]} - {existing_df.head(1).to_json()}")
+        # Initialize change tracking
+        changes = {
+            'inserts': 0,
+            'updates': 0,
+            'deletes': 0,
+            'unchanged': 0,
+            'total_processed': len(df)
+        }
         
-        # Track changes
-        inserts_count = 0
-        updates_count = 0
-        deletes_count = 0
-        no_changes_count = 0  # Track rows with no changes
-        
-        # Detect and handle updates and inserts
-        for _, new_row in df.iterrows():
-            # Early check: Find matching rows in existing data by hash
-            matching_rows = existing_df[existing_df['record_hash'] == new_row['record_hash']]
-            
-            # If hash matches, it's potentially an unchanged record
-            if len(matching_rows) > 0:
-                # Early exit if hash is identical
-                no_changes_count += 1
-                logger.debug(f"NO CHANGE: Record with hash {new_row['record_hash']} remains unchanged")
-                continue
-            
-            # If no matching hash, treat as a new record
+        # Identify new records (inserts)
+        new_records = df[~df['record_hash'].isin(existing_df['record_hash'])]
+        for _, new_row in new_records.iterrows():
             change_log = CDCChangeLog(
                 change_type='INSERT',
                 table_name=exact_table_name,
@@ -256,46 +214,34 @@ def perform_cdc(df, engine, table_name='owl_connect_export'):
                 new_data=str(new_row.drop('record_hash'))
             )
             session.add(change_log)
-            inserts_count += 1
-            
+            changes['inserts'] += 1
             logger.debug(f"INSERT: New record with hash {new_row['record_hash']} added")
         
-        # Additional pass to detect updates in existing records
-        for _, existing_row in existing_df.iterrows():
-            # Skip if the record's hash is in the new dataset
-            if existing_row['record_hash'] in df['record_hash'].values:
-                continue
-            
-            # This is a record to be deleted
+        # Identify records to be deleted
+        deleted_records = existing_df[~existing_df['record_hash'].isin(df['record_hash'])]
+        for _, deleted_row in deleted_records.iterrows():
             change_log = CDCChangeLog(
                 change_type='DELETE',
                 table_name=exact_table_name,
-                record_id=existing_row['record_hash'],
-                old_data=str(existing_row.drop('record_hash'))
+                record_id=deleted_row['record_hash'],
+                old_data=str(deleted_row.drop('record_hash'))
             )
             session.add(change_log)
-            deletes_count += 1
-            
-            logger.debug(f"DELETE: Record with hash {existing_row['record_hash']} will be removed from {exact_table_name}")
+            changes['deletes'] += 1
+            logger.debug(f"DELETE: Record with hash {deleted_row['record_hash']} will be removed from {exact_table_name}")
+        
+        # Identify unchanged records
+        changes['unchanged'] = len(df[df['record_hash'].isin(existing_df['record_hash'])])
         
         # Log summary of changes
         logger.info(f"Change Summary for {exact_table_name}:")
-        logger.info(f"  Inserts: {inserts_count}")
-        logger.info(f"  Updates: {updates_count}")
-        logger.info(f"  Unchanged: {no_changes_count}")
-        logger.info(f"  Deletes: {deletes_count}")
-        logger.info(f"  Total Processed: {len(df)}")
+        for change_type, count in changes.items():
+            logger.info(f"  {change_type.capitalize()}: {count}")
         
         # Commit changes to change log
         session.commit()
         
-        # Info level logging for summary
-        logger.info(f"CDC Summary: {inserts_count} inserts, {updates_count} updates, {deletes_count} deletes")
-        
-        # Remove hash column before final import
-        final_df = df.drop(columns=['record_hash'])
-        
-        return final_df
+        return changes
     
     except Exception as e:
         session.rollback()
@@ -314,7 +260,7 @@ def import_excel_to_mysql(excel_path, sheet_name, engine):
         df.columns = [sanitize_column_name(col) for col in df.columns]
         
         # Perform Change Data Capture
-        df = perform_cdc(df, engine)
+        changes = perform_cdc(df, engine)
         
         # Import to MySQL
         logger.info(f"Importing data from {excel_path}")
