@@ -154,7 +154,94 @@ def compute_record_hash(row, exclude_columns=None):
     
     return hash_value
 
-def perform_cdc(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine, table_name: str = 'owl-connect-export') -> dict:
+def ensure_table_exists(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine, table_name: str, session: sqlalchemy.orm.Session) -> dict:
+    """
+    Ensure the specified table exists, creating it if necessary.
+    
+    Args:
+        df (pd.DataFrame): DataFrame to be imported
+        engine (sqlalchemy.engine.base.Engine): Database connection engine
+        table_name (str): Name of the target table
+        session (sqlalchemy.orm.Session): Active database session
+    
+    Returns:
+        dict: A dictionary containing import details and the exact table name
+    """
+    # Check for case-insensitive and hyphen/underscore flexible table name match
+    inspector = inspect(engine)
+    all_tables = inspector.get_table_names()
+    logger.debug(f"All tables in database: {all_tables}")
+    
+    matching_tables = [
+        t for t in all_tables 
+        if (t.lower() == table_name.lower() or 
+            t.lower().replace('-', '_') == table_name.lower().replace('-', '_'))
+    ]
+    
+    # First-time import or table doesn't exist
+    if not matching_tables:
+        logger.warning(f"No table found matching '{table_name}'. Performing first-time import.")
+        
+        # Provide more detailed logging about potential matches
+        similar_tables = [
+            t for t in all_tables 
+            if table_name.lower() in t.lower() or t.lower() in table_name.lower()
+        ]
+        if similar_tables:
+            logger.info(f"Similar tables found: {similar_tables}")
+        
+        # Add hash column for tracking
+        df['record_hash'] = df.apply(compute_record_hash, axis=1)
+        
+        # Prepare first-time import changes
+        changes = {
+            'inserts': len(df),
+            'updates': 0,
+            'deletes': 0,
+            'unchanged': 0,
+            'total_processed': len(df),
+            'table_name': None
+        }
+        
+        # Log each record being inserted
+        for _, new_row in df.iterrows():
+            change_log = CDCChangeLog(
+                change_type='INSERT',
+                table_name=table_name,
+                record_id=new_row['record_hash'],
+                new_data=str(new_row.drop('record_hash'))
+            )
+            session.add(change_log)
+            logger.debug(f"INSERT: New record with hash {new_row['record_hash']} added")
+        
+        # Save the entire dataframe to the database
+        normalized_table_name = table_name.lower().replace('-', '_')
+        df.to_sql(normalized_table_name, engine, if_exists='replace', index=False)
+        
+        # Commit changes to change log
+        session.commit()
+        
+        # Update table name in changes
+        changes['table_name'] = normalized_table_name
+        
+        logger.info(f"First-time import: {changes['inserts']} records inserted")
+        return changes
+    
+    # Use the exact table name from matching tables
+    exact_table_name = matching_tables[0]
+    logger.debug(f"Found matching table: {exact_table_name}")
+    
+    # Return a dictionary with the table name for consistency
+    return {
+        'table_name': exact_table_name,
+        'inserts': 0,
+        'updates': 0,
+        'deletes': 0,
+        'unchanged': 0,
+        'total_processed': 0
+    }
+
+def perform_cdc(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine, table_name: str = 'owl_connect_export') -> dict:
     """
     Perform Change Data Capture (CDC) on a given DataFrame.
     
@@ -163,7 +250,7 @@ def perform_cdc(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine, table_n
     Args:
         df (pd.DataFrame): New data to be compared with existing records
         engine (sqlalchemy.engine.base.Engine): Database connection engine
-        table_name (str, optional): Name of the target table. Defaults to 'owl-connect-export'.
+        table_name (str, optional): Name of the target table. Defaults to 'owl_connect_export'.
     
     Returns:
         dict: Summary of changes detected during the import process
@@ -187,9 +274,17 @@ def perform_cdc(df: pd.DataFrame, engine: sqlalchemy.engine.base.Engine, table_n
                 'total_processed': 0
             }
         
+        # Ensure table exists or create it
+        table_info = ensure_table_exists(df, engine, table_name, session)
+        
+        # If this was a first-time import, return the changes
+        if table_info.get('inserts', 0) > 0:
+            return table_info
+        
         # Read existing data from the table
-        exact_table_name = table_name.lower()
+        exact_table_name = table_info['table_name']
         existing_df = pd.read_sql_table(exact_table_name, engine)
+        logger.info(f"Total existing records: {exact_table_name}: {len(existing_df)}")
         
         # Add hash columns to both dataframes for tracking
         df['record_hash'] = df.apply(compute_record_hash, axis=1)
@@ -264,7 +359,7 @@ def import_excel_to_mysql(excel_path, sheet_name, engine):
         
         # Import to MySQL
         logger.info(f"Importing data from {excel_path}")
-        df.to_sql('owl-connect-export', engine, if_exists='replace', index=False)
+        df.to_sql('owl_connect_export', engine, if_exists='replace', index=False)
         
         logger.info(f"Successfully imported {len(df)} rows")
         return df
