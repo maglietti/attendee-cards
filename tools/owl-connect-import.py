@@ -42,7 +42,23 @@ logger.addHandler(console_handler)
 logger.addHandler(file_handler)
 
 def sanitize_column_name(name):
-    """Sanitize column names for SQL compatibility"""
+    """
+    Sanitize column names to ensure SQL compatibility.
+
+    Transforms input column names by removing special characters, 
+    converting to lowercase, and ensuring they start with a valid character.
+
+    Args:
+        name (str): The original column name to be sanitized.
+
+    Returns:
+        str: A SQL-friendly column name with only alphanumeric characters and underscores.
+
+    Notes:
+        - Special characters are replaced with underscores
+        - Names are converted to lowercase
+        - Names starting with a digit are prefixed with 'col_'
+    """
     # Remove special characters and replace with underscores
     name = re.sub(r'[^a-zA-Z0-9_]', '_', str(name)).lower()
     
@@ -54,7 +70,27 @@ def sanitize_column_name(name):
     return name
 
 def load_database_config():
-    """Load database configuration from .env file"""
+    """
+    Load database configuration from a .env file.
+
+    Reads database connection parameters from an environment file located 
+    in the parent directory. Validates the presence of critical configuration.
+
+    Returns:
+        dict: A dictionary containing database connection parameters with keys:
+            - 'host': Database host (defaults to 'localhost')
+            - 'user': Database username
+            - 'password': Database password
+            - 'database': Database name (defaults to 'attendees_db')
+
+    Raises:
+        ValueError: If required configuration parameters are missing.
+
+    Notes:
+        - Uses python-dotenv to load environment variables
+        - Looks for .env file in the parent directory of the script
+        - Provides default values for some configuration parameters
+    """
     # Use the parent directory's .env file
     env_path = os.path.join(os.path.dirname(__file__), '..', '.env')
     load_dotenv(dotenv_path=env_path)
@@ -75,7 +111,24 @@ def load_database_config():
     return db_config
 
 def create_sqlalchemy_engine(db_config):
-    """Create SQLAlchemy engine for database connection"""
+    """
+    Create a SQLAlchemy database connection engine.
+
+    Generates a database connection engine using the provided configuration,
+    specifically for MySQL databases with the mysqlconnector dialect.
+
+    Args:
+        db_config (dict): Database configuration dictionary containing 
+                          'user', 'password', 'host', and 'database' keys.
+
+    Returns:
+        sqlalchemy.engine.base.Engine: A configured database connection engine.
+
+    Notes:
+        - Uses MySQL connector for database connections
+        - Constructs a connection string from the provided configuration
+        - Suitable for use with pandas and SQLAlchemy ORM operations
+    """
     connection_string = (
         f"mysql+mysqlconnector://{db_config['user']}:{db_config['password']}"
         f"@{db_config['host']}/{db_config['database']}"
@@ -86,7 +139,25 @@ def create_sqlalchemy_engine(db_config):
 Base = declarative_base()
 
 class CDCChangeLog(Base):
-    """Model to track changes during data import"""
+    """
+    SQLAlchemy ORM model for tracking data changes during import operations.
+
+    This model maintains a comprehensive log of changes made during data import,
+    providing a detailed audit trail for each modification to the database.
+
+    Attributes:
+        id (int): Unique identifier for each change log entry, auto-incremented.
+        change_type (str): Type of change ('INSERT', 'UPDATE', 'DELETE').
+        table_name (str): Name of the table where the change occurred.
+        record_id (str): Identifier of the specific record that was modified.
+        old_data (str, optional): Previous state of the record before modification.
+        new_data (str, optional): Updated state of the record after modification.
+        changed_at (datetime): Timestamp of when the change was recorded.
+
+    Note:
+        This model is crucial for maintaining data integrity and tracking 
+        historical changes in the database during import processes.
+    """
     __tablename__ = 'owl_connect_change_log'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -95,7 +166,7 @@ class CDCChangeLog(Base):
     record_id = Column(String(255), nullable=False)
     old_data = Column(Text, nullable=True)
     new_data = Column(Text, nullable=True)
-    changed_at = Column(DateTime, default=datetime.utcnow)
+    changed_at = Column(DateTime, default=datetime.utcnow)  
 
 def compute_record_hash(row, exclude_columns=None):
     """
