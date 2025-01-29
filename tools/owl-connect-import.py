@@ -453,7 +453,31 @@ def import_excel_to_mysql(excel_path, sheet_name, engine):
         raise
 
 def main():
-    
+    """
+    Main script entry point for importing Owl Connect event details into a MySQL database.
+
+    This function orchestrates the entire Excel file import process, including:
+    1. Loading database configuration from a .env file
+    2. Creating a SQLAlchemy database connection engine
+    3. Importing an Excel file containing event details
+    4. Performing Change Data Capture (CDC) to track data modifications
+    5. Logging the import process and handling potential errors
+
+    The script is designed to:
+    - Read an Excel file with event details from a predefined path
+    - Sanitize column names for SQL compatibility
+    - Import data into a MySQL database table
+    - Track and log any changes made during the import process
+
+    Raises:
+        Exception: If any errors occur during database configuration, 
+                   file import, or database operations.
+
+    Notes:
+        - Requires a .env file in the parent directory for database configuration
+        - Uses a hardcoded Excel file path and sheet name
+        - Logs import progress and errors to a rotating log file
+    """
     try:
         # Excel file configuration
         excel_path = '/Users/maglietti/Code/magliettiGit/attendee-cards/owl-connect/Event_Detail_Report.xlsx'
