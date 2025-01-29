@@ -135,56 +135,29 @@ document.addEventListener('DOMContentLoaded', () => {
         card.classList.add('attendee-card');
 
         // Use provided photo or fallback to a default
-        const photoUrl = attendee.photo || 'https://via.placeholder.com/300x300';
-
-        // Create social links HTML with icons
-        const socialLinksHtml = attendee.socialLinks 
-            ? attendee.socialLinks.map(link => 
-                `<a href="${link}" target="_blank" rel="noopener noreferrer" title="${new URL(link).hostname}">
-                    <i class="${getSocialPlatform(link)}"></i>
-                </a>`
-            ).join('') 
-            : '';
-
-        // Update graduation year display to include department
-        const departmentDisplay = `
-            <p id="graduation-year">
-                <strong> ${attendee.yearGraduated} </strong>
-            </p>
-            <p id="department"> 
-                ${attendee.department || 'Department Not Specified'}
-            </p>`;
+        const photoUrl = attendee.photo || 'https://profiles.rice.edu/sites/g/files/bxs3881/files/styles/thumbnail_small_170x170/public/2023-09/no-photo.png.jpeg';
 
         card.innerHTML = `
-            <img src="${photoUrl}" alt="${attendee.fullName}" onerror="this.src='https://via.placeholder.com/300x300'">
+            <img src="${photoUrl}" alt="${attendee.fullName}" onerror="this.src='https://profiles.rice.edu/sites/g/files/bxs3881/files/styles/thumbnail_small_170x170/public/2023-09/no-photo.png.jpeg'">
             <div class="attendee-card-content">
                 <h2>${attendee.fullName}</h2>
                 <h3>${attendee.company ? `${attendee.company}` : ''}</h3>
-                ${departmentDisplay}
-                <p id="attendee-description">${attendee.description}</p>
+                <p id="attendee-description">${attendee.description ? `${attendee.description}` : ''}</p>
                 <div class="social-links">
                     ${attendee.linkedin ? `<a href="${attendee.linkedin}" target="_blank" rel="noopener noreferrer" title="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>` : ''}
-                    ${socialLinksHtml}
                 </div>
+                <p id="graduation-year">
+                    <strong> ${attendee.yearGraduated ? `${attendee.yearGraduated}` : ''} </strong>
+                    ${attendee.department ? ` - ${attendee.department}` : ''}
+                </p>
             </div>
         `;
 
         return card;
     }
-
-    // Determine social platform from URL and return icon class
-    function getSocialPlatform(url) {
-        if (url.includes('twitter.com') || url.includes('x.com')) return 'fab fa-x-twitter';
-        if (url.includes('github.com')) return 'fab fa-github';
-        if (url.includes('linkedin.com')) return 'fab fa-linkedin-in';
-        if (url.includes('instagram.com')) return 'fab fa-instagram';
-        if (url.includes('facebook.com')) return 'fab fa-facebook-f';
-        if (url.includes('medium.com')) return 'fab fa-medium';
-        return 'fas fa-link';
-    }
-
+    
     // Initial fetch
     fetchAttendees();
 });

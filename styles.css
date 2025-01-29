@@ -20,7 +20,7 @@ body {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 2rem;
 }
@@ -32,47 +32,52 @@ h1 {
 }
 
 .attendees-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
+  padding: 1rem 0;
 }
 
 .attendee-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: calc(50% - 1.5rem);
+  height: auto;
   background-color: var(--card-background);
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  height: 100%; /* Ensure full height */
+  position: relative;
 }
 
 .attendee-card img {
-  width: 150px;
-  height: 150px;
+  align-self: flex-start;
+  margin: 1rem 1rem 0 1rem;
+  width: 100px;
+  height: 120px;
   object-fit: cover;
-  border-radius: 50%;
-  margin: 1rem auto 0 auto;
-  display: block;
+  border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .attendee-card-content {
   flex-grow: 1;
+  padding: 1rem 1rem 1rem 0;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  justify-content: flex-start;
 }
 
-.attendee-card-content h2 {
-  text-align: center;
+.attendee-card-content h2,
+.attendee-card-content h3 {
+  text-align: left;
   font-size: 1.25rem;
   color: var(--primary-color);
 }
 
 .attendee-card-content h3 {
-  text-align: center;
   font-size: 0.8rem;
   margin-bottom: 0.8rem;
   margin-top: 0;
@@ -84,7 +89,6 @@ h1 {
 .attendee-card-content p {
   font-size: 0.9rem;
   color: #666;
-  margin-bottom: 0.5rem;
   line-height: 1.5;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -97,13 +101,9 @@ h1 {
 }
 
 #graduation-year {
-  font-weight: bold;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
   color: var(--secondary-color);
-  margin-bottom: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
 }
 
 #department {
@@ -116,13 +116,11 @@ h1 {
 }
 
 .social-links {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  margin-top: auto; /* Push to bottom */
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  gap: 0.5rem;
 }
 
 .social-links a {
@@ -364,4 +362,20 @@ h1 {
     .admin-container {
         padding: 10px;
     }
+}
+
+@media screen and (max-width: 768px) {
+  .attendees-grid {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attendee-card {
+    width: 100%;
+  }
+
+  .attendee-card img {
+    width: 100px;
+    height: 120px;
+  }
 }
